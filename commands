@@ -1,0 +1,7 @@
+rm -R configs/nginx
+mkdir configs/nginx
+openssl req -newkey rsa:2048 -nodes -keyout configs/nginx/my-site.com.key -x509 -days 365 -out configs/nginx/my-site.com.crt
+
+
+
+letsencrypt certonly -d test.abbirr.com

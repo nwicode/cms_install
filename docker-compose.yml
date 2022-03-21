@@ -1,0 +1,76 @@
+version: "3.8"
+services:
+    app_creator_web:
+        image: nwcodecms/app_creator_web:1.0.1
+        restart: unless-stopped
+        environment:
+            DOMAIN_NAME: ${DOMAIN_NAME}
+        networks:
+            - app_creator_network
+
+    app_creator_api:
+        image: nwcodecms/app_creator_api:1.0.1
+        restart: unless-stopped
+        volumes:
+            - file-volumes:/var/www/html  
+        depends_on:
+            - app_creator_mysql
+        networks:
+            - app_creator_network
+    
+    app_creator_api_nginx:
+        image: nginx:stable-alpine
+        restart: unless-stopped
+        volumes:
+            - file-volumes:/var/www/html
+            - ./configs/apinginx.conf:/etc/nginx/nginx.conf:ro
+        depends_on:
+            - app_creator_api
+        networks:
+            - app_creator_network
+    
+    app_creator_nginx:
+        image: nginx
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./configs/:/src
+            - /etc/letsencrypt/:/home
+        command: ./src/run_nginx.sh
+        environment:
+            DOMAIN_NAME: ${DOMAIN_NAME}
+            API_APP_PORT: ${API_APP_PORT}
+        depends_on:
+            - app_creator_api
+        networks:
+            - app_creator_network
+
+    app_creator_scheduler:
+        image: nwcodecms/app_creator_scheduler:1.0.1
+        restart: unless-stopped
+        depends_on:
+            - app_creator_api
+            - app_creator_mysql
+        networks:
+            - app_creator_network
+
+    app_creator_mysql:
+        image: mysql:8.0
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./database/mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        networks:
+            - app_creator_network
+volumes:
+  file-volumes:
+networks:
+    app_creator_network:
+        driver: bridge
