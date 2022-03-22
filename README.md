@@ -32,6 +32,8 @@ Before installation, you must obtain a license key, it will need to be specified
 
 ### 6. After install
 For first login use this credentials:
+
 	admin@admin.com
     admin
+    
 Don't forget to setup Email SMTP credentials and  change default admin login and password.
