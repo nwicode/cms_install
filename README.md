@@ -2,6 +2,13 @@
 
 Step-by-step instructions for installing Nwicode v2 CMS on hosting running Ubuntu 18 and higher.
 
+### Requirements
+-  The domain name to be used. The domain must be configured so that the domain is revoked from the server used to install
+-  The operating system used for CMS - Ubuntu 20+.
+-  Server requirements: 4 GB of RAM, at least 40 GB of hard disk space (preferably SSD), 2+ CORE.
+-  Since additional packages will need to be installed on the server, you must have root access for these operations.
+
+
 ### 1. Install "git"
     sudo apt-get update
 	sudo apt-get -y install git
