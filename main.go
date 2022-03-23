@@ -92,7 +92,7 @@ func main() {
 	}
 	requestForm := map[string]string{"product_id": "A16D1689", "license_code": LICENSE_KEY, "client_name": DOMAIN_NAME}
 	jsonValue, _ := json.Marshal(requestForm)
-	resp, err := http.Post("http://127.0.0.1:8000/api/licenses/verify", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post("https://updates.nwcode.io/licenses/verify", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Println("Whoops This!: ", err)
 		return
@@ -104,7 +104,7 @@ func main() {
 	var licenseResp LicenseResponse
 	err = json.Unmarshal(body, &licenseResp)
 	if err != nil {
-		fmt.Println("Whoops Here!: ", err.Error())
+		fmt.Println("Whoops Error!: ", err.Error())
 		return
 	}
 	if !licenseResp.Status {
