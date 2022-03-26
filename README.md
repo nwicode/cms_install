@@ -34,6 +34,12 @@ During installation, use confirmation with the "standalone" server.
 ### 5. Install CMS
     chmod +x installer
     ./installer
+    docker-compose pull
+    docker-compose up -d
+    docker-compose exec app_creator_api php artisan migrate
+    docker-compose exec app_creator_api php artisan db:seed
+
+./installer prompts the user for data and stores it in ENV
 
 Before installation, you must obtain a license key, it will need to be specified during installation, otherwise the installation will be interrupted.
 
