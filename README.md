@@ -1,4 +1,4 @@
-# NWICODE v2 installation steps
+# NWICODE v2 installation steps ( temporarily unavailable )
 
 Step-by-step instructions for installing Nwicode v2 CMS on hosting running Ubuntu 18 and higher.
 
